@@ -1,61 +1,229 @@
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: 'Press Start 2P', cursive; background:#111; color:#00ffcc; line-height:1.6; transition:0.3s; caret-color: #00ffcc; }
+/* ---------- CONFIGURAÇÃO GERAL ---------- */
+body {
+  font-family: 'Press Start 2P', cursive;
+  background-color: #0a0a0a;
+  color: #00ff99;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  transition: background 0.5s, color 0.5s;
+}
 
-/* CURSOR PISCANTE */
-.blink { display:inline-block; width:10px; background-color:#00ffcc; animation:blink 1s step-start infinite; }
-@keyframes blink { 0%,50%,100%{opacity:1;} 25%,75%{opacity:0;} }
+/* Modo claro */
+body.light-mode {
+  background-color: #fdfdfd;
+  color: #222;
+}
 
-/* HEADER */
-header { background:#220022; text-align:center; padding:20px; box-shadow:0 4px 0 #ff00ff; position:sticky; top:0; z-index:10; }
-header h1 { margin-bottom:10px; }
-header p { font-style:italic; opacity:0.9; }
-header button { margin-top:10px; padding:8px 15px; border:2px solid #00ffff; background:#ff00ff; color:#00ffff; cursor:pointer; box-shadow:3px 3px 0 #00ffff; }
+/* Links do menu */
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #111;
+  display: flex;
+  justify-content: center;
+  border-bottom: 2px solid #00ffcc;
+}
+nav li {
+  margin: 0 15px;
+}
+nav a {
+  color: #00ffff;
+  text-decoration: none;
+  font-size: 10px;
+  transition: color 0.3s;
+}
+nav a:hover {
+  color: #ff00ff;
+  text-shadow: 0 0 5px #ff00ff;
+}
 
-nav ul { list-style:none; display:flex; justify-content:center; gap:20px; margin-bottom:15px; }
-nav a { color:#00ffcc; text-decoration:none; font-weight:bold; }
-nav a:hover { color:#ff00ff; }
+/* Cabeçalho */
+header {
+  padding: 30px 20px;
+  background: linear-gradient(180deg, #0d0d0d 0%, #1a1a1a 100%);
+  border-bottom: 3px solid #00ffcc;
+}
+header h1 {
+  color: #00ffcc;
+  font-size: 14px;
+  margin-bottom: 10px;
+  position: relative;
+  display: inline-block;
+}
 
-/* MAIN */
-main { padding:40px 20px; }
-section { scroll-margin-top:100px; }
-.resumo { max-width:750px; margin:20px auto; padding:20px; background:#222; border-left:5px solid #ff00ff; border-radius:8px; text-align:center; font-style:italic; }
+/* Glitch título */
+header h1::before,
+header h1::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+}
+header h1::before {
+  color: #ff00ff;
+  clip: rect(0, 900px, 0, 0);
+}
+header h1::after {
+  color: #00ffff;
+  animation: glitch 2s infinite linear alternate-reverse;
+}
+@keyframes glitch {
+  0% { clip: rect(0,900px,5px,0); transform: translate(-2px,-2px); }
+  10% { clip: rect(5px,900px,10px,0); transform: translate(2px,2px); }
+  20% { clip: rect(10px,900px,15px,0); transform: translate(-1px,1px); }
+  30% { clip: rect(15px,900px,20px,0); transform: translate(1px,-1px); }
+  40% { clip: rect(20px,900px,25px,0); transform: translate(-2px,2px); }
+  50% { clip: rect(25px,900px,30px,0); transform: translate(2px,-2px); }
+  60% { clip: rect(30px,900px,35px,0); transform: translate(-1px,1px); }
+  70% { clip: rect(35px,900px,40px,0); transform: translate(1px,-1px); }
+  80% { clip: rect(40px,900px,45px,0); transform: translate(-2px,2px); }
+  90% { clip: rect(45px,900px,50px,0); transform: translate(2px,-2px); }
+  100% { clip: rect(50px,900px,55px,0); transform: translate(0,0); }
+}
 
-/* CARDS */
-.card { max-width:750px; margin:20px auto; padding:20px; background:#222; border:3px solid #ff00ff; border-radius:8px; box-shadow:3px 3px 0 #00ffff; }
-.card h3 { margin-bottom:10px; color:#ff00ff; text-align:left; }
-.card ul { list-style:none; padding-left:0; }
-.card li { background: rgba(0,255,255,0.05); margin:8px 0; padding:10px; border-radius:6px; cursor:pointer; position:relative; }
-.card li::before { content:"🔹"; display:inline-block; margin-right:10px; animation:pulse 1.5s infinite alternate; }
-.exp-details { display:none; margin-top:5px; font-style:italic; background: rgba(0,255,255,0.05); padding:8px; border-radius:6px; }
+/* Efeito cursor piscando */
+.blink { animation: blink 1s infinite; }
+@keyframes blink { 50% { opacity: 0; } }
 
-/* PULSE ICON */
-@keyframes pulse { 0%{transform:scale(1);} 100%{transform:scale(1.2);} }
+/* Botão modo escuro/claro */
+#toggle-theme {
+  background: none;
+  border: 2px solid #00ffcc;
+  color: #00ffcc;
+  padding: 5px 10px;
+  font-size: 10px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s;
+}
+#toggle-theme:hover {
+  background: #00ffcc;
+  color: #000;
+}
 
-/* BOTOES */
-.download-btn, .email-btn { text-align:center; margin:20px 0; }
+/* ---------- SEÇÕES ---------- */
+section {
+  margin: 40px auto;
+  max-width: 800px;
+  padding: 20px;
+  border: 2px solid #00ffcc;
+  border-radius: 10px;
+  background: rgba(0,255,204,0.05);
+  box-shadow: 0 0 10px #00ffcc44;
+}
+
+h2 {
+  color: #00ffff;
+  font-size: 12px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+p, li { font-size: 10px; line-height: 1.6; }
+
+/* ---------- CARDS ---------- */
+.card {
+  background: #111;
+  border: 2px solid #00ffcc;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 20px 0;
+  text-align: left;
+  color: #00ffcc;
+  position: relative;
+  animation: neon-card 2s infinite alternate;
+}
+.card h3 { font-size: 11px; color: #ff00ff; text-shadow: 0 0 5px #ff00ff; }
+.card ul { list-style: none; padding: 0; }
+.card li { margin: 8px 0; }
+
+/* ---------- Neon piscando nos cards ---------- */
+@keyframes neon-card {
+  0% { box-shadow: 0 0 5px #00ffcc,0 0 10px #00ffcc; }
+  50% { box-shadow: 0 0 10px #00ffff,0 0 20px #00ffff; }
+  100% { box-shadow: 0 0 5px #ff00ff,0 0 15px #ff00ff; }
+}
+
+/* Detalhes experiência */
+.exp-details { display: none; color: #ccc; font-size: 9px; margin-left: 10px; }
+
+/* ---------- BOTÕES ---------- */
 .download-btn a, .email-btn a {
-  display:inline-block; background:#ff00ff; color:#00ffff; font-weight:bold;
-  padding:12px 25px; border:2px solid #00ffff; border-radius:6px; text-decoration:none;
-  box-shadow:3px 3px 0 #00ffff; transition: transform 0.2s, background 0.2s;
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  color: #000;
+  background: #00ffcc;
+  text-decoration: none;
+  border: 2px solid #00ffcc;
+  border-radius: 5px;
+  font-size: 10px;
+  transition: all 0.3s;
+  animation: neon-btn 2s infinite alternate;
 }
-.download-btn a:hover, .email-btn a:hover { transform:translate(2px,2px); background:#ff00cc; }
-
-/* FOOTER */
-footer { text-align:center; padding:20px; background:#220022; border-top:2px solid #ff00ff; font-size:0.9em; }
-
-/* LIGHT MODE */
-body.light-mode { background:#f5f5f5; color:#222; }
-body.light-mode .card { background:#ffe5e5; color:#222; border-color:#cc0000; box-shadow:3px 3px 0 #cc0000; }
-body.light-mode nav a { color:#222; }
-body.light-mode header { background:#ff66cc; color:#222; }
-body.light-mode .resumo { background:#fff; border-left:5px solid #cc0000; }
-
-/* SCANLINE CRT */
-body::after {
-  content: "";
-  position: fixed; top:0; left:0;
-  width:100%; height:100%;
-  pointer-events:none;
-  background: repeating-linear-gradient(rgba(0,0,0,0.05) 0 1px, transparent 1px 2px);
-  z-index:9999;
+.download-btn a:hover, .email-btn a:hover {
+  transform: scale(1.05);
 }
+
+/* Neon piscando nos botões */
+@keyframes neon-btn {
+  0% { box-shadow: 0 0 5px #00ffcc,0 0 10px #00ffcc; background-color:#00ffcc; }
+  50% { box-shadow: 0 0 10px #ff00ff,0 0 20px #ff00ff; background-color:#ff00ff; }
+  100% { box-shadow: 0 0 5px #00ffff,0 0 15px #00ffff; background-color:#00ffff; }
+}
+
+/* ---------- TERMINAL RETRÔ ---------- */
+.terminal-window {
+  background: #000;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+  font-family: monospace;
+  text-align: left;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #00ff0044;
+}
+.terminal-header {
+  background: #111;
+  color: #00ff00;
+  padding: 5px;
+  border-bottom: 1px solid #00ff00;
+  font-size: 10px;
+}
+#terminal-output {
+  height: 150px;
+  overflow-y: auto;
+  font-size: 10px;
+  padding: 5px;
+  color: #00ff66;
+}
+#terminal-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: #000;
+  color: #00ff00;
+  font-size: 10px;
+  padding: 8px;
+  font-family: monospace;
+}
+.prompt { color: #00ffcc; }
+
+/* ---------- RODAPÉ ---------- */
+footer {
+  margin-top: 40px;
+  padding: 20px;
+  font-size: 9px;
+  border-top: 2px solid #00ffcc;
+  color: #888;
+  background: #0d0d0d;
+}
+
+/* Scroll suave */
+html { scroll-behavior: smooth; }
